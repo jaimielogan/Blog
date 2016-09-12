@@ -5,7 +5,8 @@ body {
   flex-direction: column;
 }
 
-.title{
+.title,
+.register{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -46,7 +47,15 @@ body {
   color: black;
 }
 
-
 a {
   color: #00B7FF;
+}
+
+.register,
+.login {
+  margin: 20px;
+}
+
+.textInput {
+  margin: 20px;
 }
