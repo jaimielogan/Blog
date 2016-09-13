@@ -42,6 +42,13 @@ router.post('/login', passport.authenticate('local', {
 })
 );
 
+//---------------//
+// Logout //
+router.get('/logout', function(req,res){
+  req.logout();
+  res.redirect('/login');
+});
+
 //--------------//
 // Post Article //
 router.get('/post', function(req,res,next){
@@ -226,13 +233,6 @@ router.get('/:blogid/:commentid/deleteComment', function(req,res,next){
       });
     });
   });
-});
-
-//---------------//
-// Logout //
-router.get('/logout', function(req,res){
-  req.logout();
-  res.redirect('/login');
 });
 
 module.exports = router;
