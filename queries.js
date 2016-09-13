@@ -1,7 +1,5 @@
 var bcrypt = require('bcrypt');
-var environment = 'development';
-var config = require('./knexfile.js')[environment];
-var knex = require('knex')(config);
+var knex = require('./db/knex.js');
 
 //User Queries
 function hashPassword(password){
