@@ -13,7 +13,7 @@ function findUser(username){
 }
 
 function findUserInformation(username){
-  return knex('user').select('id','username','fullName').first();
+  return knex('user').select('id','username','fullName').where('username',username).first();
 }
 
 function findHashedPassword(username){
@@ -56,7 +56,7 @@ function getBlogs(){
 }
 
 function getBlogByID(id){
-  return knex('blog').select('id','title','content AS blogContent','imageURL').where('id',id);
+  return knex('blog').select('id','title','content AS blogContent', 'user_id','imageURL').where('id',id);
 }
 
 function getBlogAndCommentsByBlogID(id){
@@ -72,19 +72,19 @@ function getComments(blog_id){
 }
 
 function getCommentsByID(comment_id){
-  return knex('comment').select('id AS comment_id', 'blog_id','content AS comment_content').where('id',comment_id);
+  return knex('comment').select('id AS comment_id', 'blog_id','content AS comment_content','user_id').where('id',comment_id);
 }
 
 function createPost(title,content,image,user_id,user_fullName,snippet){
-  return knex('blog').insert({title: title, content:content,imageURL:image,snippet:content.substring(0,100)+'...',user_fullName:'Jaimie'});
+  return knex('blog').insert({title: title, content:content, imageURL:image, user_id: user_id, user_fullName: user_fullName,snippet:content.substring(0,100)+'...'});
 }
 
 function createComment(user_id,blog_id,content,user_fullName){
   return knex('comment').insert({user_id:user_id, blog_id:blog_id, content:content, user_fullName: user_fullName});
 }
 
-function editBlogPost(blog_id,title,content,snippet,image){
-  return knex('blog').update({title:title, content:content,snippet:content.substring(0,100)+'...', imageURL:image}).where('id',blog_id);
+function editBlogPost(blog_id,title,content,image,snippet){
+  return knex('blog').update({title:title, content:content, imageURL:image,snippet:content.substring(0,100)+'...',}).where('id',blog_id);
 }
 
 function deleteComments(blog_id){

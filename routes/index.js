@@ -3,7 +3,9 @@ var router = express.Router();
 var passport = require('../passport');
 var query = require('../queries.js');
 
-/* GET home page. */
+// Home Page //
+//-----------//
+// Get Blogs //
 router.get('/', function(req, res, next) {
   query.getBlogs()
   .then(function(blogData){
@@ -11,6 +13,8 @@ router.get('/', function(req, res, next) {
   });
 });
 
+//-----------//
+// Register //
 router.get('/register', function(req,res,next){
   res.render('register');
 });
@@ -21,10 +25,13 @@ router.post('/register', function(req,res,next){
     res.redirect('/login');
   })
   .catch(function(err){
-    return next(err);
+    res.render('error', {message: "This username is already in use.", link: '/register'});
+    return;
   });
 });
 
+//--------//
+// Login //
 router.get('/login', function(req,res,next){
   res.render('login');
 });
@@ -35,6 +42,8 @@ router.post('/login', passport.authenticate('local', {
 })
 );
 
+//--------------//
+// Post Article //
 router.get('/post', function(req,res,next){
   if(!req.isAuthenticated()){
     res.redirect('/login');
@@ -43,14 +52,22 @@ router.get('/post', function(req,res,next){
   res.render('post', {user: req.user});
 });
 
-
 router.post('/post', function(req,res,next){
-  query.createPost(req.body.title,req.body.content,req.body.image)
-  .then(
-    res.redirect('/')
-  );
+  if(!req.isAuthenticated()){
+    res.redirect('/login');
+    return;
+  }
+  query.findUserInformation(req.user.username)
+  .then(function(userInfo){
+    query.createPost(req.body.title,req.body.content,req.body.image,userInfo.id,userInfo.fullName)
+    .then(function(){
+      res.redirect('/');
+    });
+  });
 });
 
+//---------------//
+// Get One Blog //
 router.get('/:blogid', function(req,res,next){
   if(!req.isAuthenticated()){
     res.redirect('/login');
@@ -65,6 +82,8 @@ router.get('/:blogid', function(req,res,next){
   });
 });
 
+//----------------------------//
+// Create Comment On One Blog //
 router.post('/:blogid', function(req,res,next){
   if(!req.isAuthenticated()){
     res.redirect('/login');
@@ -84,14 +103,25 @@ router.post('/:blogid', function(req,res,next){
   });
 });
 
+
+//---------------//
+// Edit One Blog //
 router.get('/:blogid/editPost', function(req,res,next){
   if(!req.isAuthenticated()){
     res.redirect('/login');
     return;
   }
-  query.getBlogByID(req.params.blogid)
-  .then(function(blogInfo){
-    res.render('edit', {blogInfo: blogInfo});
+  var url = '/' + req.params.blogid;
+  query.findUserInformation(req.user.username)
+  .then(function(userInfo){
+    query.getBlogByID(req.params.blogid)
+    .then(function(blogInfo){
+      if(userInfo.id !== blogInfo[0].user_id){
+        res.render('error', {message: "This is not your blog post. You do not have access to edit.", link: url});
+        return;
+      }
+      res.render('edit', {blogInfo: blogInfo});
+    });
   });
 });
 
@@ -107,31 +137,58 @@ router.post('/:blogid/editPost', function(req,res,next){
   });
 });
 
+//------------------//
+// Delete One Blog //
 router.get('/:blogid/deletePost', function(req,res,next){
   if(!req.isAuthenticated()){
     res.redirect('/login');
     return;
   }
-  query.deleteComments(req.params.blogid)
-  .then(function(){
-    query.deleteBlogPost(req.params.blogid)
-    .then(function(){
-      res.redirect('/');
+  var url = '/' + req.params.blogid;
+  query.findUserInformation(req.user.username)
+  .then(function(userInfo){
+    console.log('userInfo',userInfo);
+    query.getBlogByID(req.params.blogid)
+    .then(function(blogInfo){
+      console.log('userInfo.id',userInfo.id);
+      console.log('blogInfo',blogInfo);
+      console.log('blogInfo[0]',blogInfo);
+      if(userInfo.id !== blogInfo[0].user_id){
+        res.render('error', {message: "This is not your blog post. You do not have access to edit.", link: url});
+        return;
+      }
+      query.deleteComments(req.params.blogid)
+      .then(function(){
+        query.deleteBlogPost(req.params.blogid)
+        .then(function(){
+          res.redirect('/');
+        });
+      });
     });
   });
 });
 
+//-------------------------------//
+// Edit One Comment on One Blog //
 router.get('/:blogid/:commentid/editComment', function(req,res,next){
   if(!req.isAuthenticated()){
     res.redirect('/login');
     return;
   }
-  query.getBlogByID(req.params.blogid)
-  .then(function(blogInfo){
-    query.getCommentsByID(req.params.commentid)
+  var url = '/' + req.params.blogid;
+  query.findUserInformation(req.user.username)
+  .then(function(userInfo){
+    query.getBlogByID(req.params.blogid)
+    .then(function(blogInfo){
+      query.getCommentsByID(req.params.commentid)
       .then(function(commentById){
+        if(userInfo.id !== commentById[0].user_id){
+          res.render('error', {message: "This is not your comment. You do not have access to edit.", link: url});
+          return;
+        }
         res.render('comment', {blogInfo: blogInfo, commentById: commentById});
       });
+    });
   });
 });
 
@@ -147,24 +204,33 @@ router.post('/:blogid/:commentid/editComment', function(req,res,next){
   });
 });
 
-
+//---------------------------------//
+// Delete One Comment on One Blog //
 router.get('/:blogid/:commentid/deleteComment', function(req,res,next){
   if(!req.isAuthenticated()){
     res.redirect('/login');
     return;
   }
   var url = '/' + req.params.blogid;
-  query.deleteComment(req.params.commentid)
-  .then(function(){
-    res.redirect(url);
+  query.findUserInformation(req.user.username)
+  .then(function(userInfo){
+    query.getCommentsByID(req.params.commentid)
+    .then(function(commentById){
+      if(userInfo.id !== commentById[0].user_id){
+        res.render('error', {message: "This is not your comment. You do not have access to delete.", link: url});
+        return;
+      }
+      query.deleteComment(req.params.commentid)
+      .then(function(){
+        res.redirect(url);
+      });
+    });
   });
 });
 
+//---------------//
+// Logout //
 router.get('/logout', function(req,res){
-  if(!req.isAuthenticated()){
-    res.redirect('/login');
-    return;
-  }
   req.logout();
   res.redirect('/');
 });
