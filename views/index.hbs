@@ -1,8 +1,13 @@
-{{#each blogs}}
-  <h3>{{title}}</h3>
+<div class="blogs">
+  {{#each blogs}}
+  <h3 class="blogTitle">{{title}}</h3>
+  <h6 class="author">Written By: {{user_fullName}}</h6>
   <img class="blogImage" src="{{imageURL}}"/>
-  <p>
+  <p class="content">
     {{snippet}}
   </p>
-  <a href="/{{blog_id}}" class="read">Read More &gt</a>
-{{/each}}
+  <div class="border">
+    <a href="/{{blog_id}}" class="read">Read More &gt</a>
+  </div>
+  {{/each}}
+</div>

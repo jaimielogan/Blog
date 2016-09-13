@@ -232,7 +232,7 @@ router.get('/:blogid/:commentid/deleteComment', function(req,res,next){
 // Logout //
 router.get('/logout', function(req,res){
   req.logout();
-  res.redirect('/');
+  res.redirect('/login');
 });
 
 module.exports = router;

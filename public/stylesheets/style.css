@@ -5,12 +5,20 @@ body {
   flex-direction: column;
 }
 
+/*Layout*/
 .title,
-.register{
+.register,
+.login,
+.blogs{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.title{
+  margin-bottom: 50px;
+  font-size: 5vw;
 }
 
 .navigation{
@@ -51,6 +59,8 @@ a {
   color: #00B7FF;
 }
 
+/*Login & Register*/
+
 .register,
 .login {
   margin: 20px;
@@ -60,7 +70,90 @@ a {
   margin: 20px;
 }
 
+/*Index.hbs*/
+
+.blogTitle,
+.author{
+  margin-bottom: 10px;
+}
+
 .blogImage{
-  width:50px;
+  width:500px;
   height: auto;
+  margin-bottom: 20px;
+}
+
+.border{
+  padding:0 45% 5px 45%;
+  border-bottom: 1px solid lightgrey;
+}
+
+.content{
+  width: 60%;
+  font-size: 1.5vw;
+  line-height: 1.5;
+  text-align: justify;
+}
+
+/*Blog.hbs*/
+/*edit.hbs*/
+/*comment.hbs*/
+
+.commentHeader{
+  font-size: 2vw;
+  margin-top: 50px;
+  padding-top: 20px;
+  border-top: 1px solid lightgrey;
+}
+
+.comments {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  margin-bottom: 20px;
+  padding: 10px 20px 10px 20px;
+}
+
+.noComments{
+  font-size: 1.5vw;
+  border-bottom: 1px solid lightgrey;
+  padding-bottom: 20px;
+}
+
+.commentUser{
+  font-size: 1vw;
+}
+
+.newComment{
+  margin-top:20px;
+}
+
+.commentArea{
+  border: 1px solid  lightgrey;
+  padding: 5px 0 0 5px;
+}
+
+.submitComment,
+.cancel,
+.submitEdit,
+.submit{
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.commentForm,
+.post{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+label{
+  margin: 10px;
+  font-size: 1.2vw;
+}
+
+.col-lg-12 {
+  border: 1px solid lightgrey;
+  padding: 5px;
 }

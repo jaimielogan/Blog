@@ -52,7 +52,7 @@ function addUser(username,password,fullName){
 
 //Blog//
 function getBlogs(){
-  return knex('blog').select('id AS blog_id','title','snippet','imageURL');
+  return knex('blog').select('id AS blog_id','title','snippet','imageURL','user_fullName').orderBy('id','desc');
 }
 
 function getBlogByID(id){
@@ -76,7 +76,7 @@ function getCommentsByID(comment_id){
 }
 
 function createPost(title,content,image,user_id,user_fullName,snippet){
-  return knex('blog').insert({title: title, content:content, imageURL:image, user_id: user_id, user_fullName: user_fullName,snippet:content.substring(0,100)+'...'});
+  return knex('blog').insert({title: title, content:content, imageURL:image, user_id: user_id, user_fullName: user_fullName,snippet:content.substring(0,200)+'...'});
 }
 
 function createComment(user_id,blog_id,content,user_fullName){
@@ -84,7 +84,7 @@ function createComment(user_id,blog_id,content,user_fullName){
 }
 
 function editBlogPost(blog_id,title,content,image,snippet){
-  return knex('blog').update({title:title, content:content, imageURL:image,snippet:content.substring(0,100)+'...',}).where('id',blog_id);
+  return knex('blog').update({title:title, content:content, imageURL:image,snippet:content.substring(0,200)+'...',}).where('id',blog_id);
 }
 
 function deleteComments(blog_id){

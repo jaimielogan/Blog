@@ -1,32 +1,40 @@
-{{#each blogInfo}}
-  <h3>{{title}}</h3>
-  <img class="blogImage" src="{{imageURL}}"/>
-  <p>
-    {{blogContent}}
-  </p>
-  <a href="/{{id}}/editPost" class="btn btn-default">Edit</a>
-  <a href="/{{id}}/deletePost" class="btn btn-default">Delete</a>
-{{/each}}
+<div class="blogs">
+  {{#each blogInfo}}
+    <h3 class="blogTitle">{{title}}</h3>
+    <img class="blogImage" src="{{imageURL}}"/>
+    <p class="content">
+      {{blogContent}}
+    </p>
+    <span>
+      <a href="/{{id}}/editPost" class="btn btn-default">Edit</a>
+      <a href="/{{id}}/deletePost" class="btn btn-default">Delete</a>
+    </span>
+  {{/each}}
+</div>
 
 <!-- Comments Section -->
-
-<h5>Comments</h5>
+<h5 class="commentHeader col-lg-10">Comments</h5>
 {{#if comments}}
-  {{#each comments}}
-    <h6>{{comment_user}}</h6>
+{{#each comments}}
+  <div class="comments col-lg-6">
+    <h6 class="commentUser">{{comment_user}}</h6>
     <p>
       {{comment_content}}
     </p>
     <a href="/{{blog_id}}/{{comment_id}}/editComment" class="btn btn-default">Edit</a>
     <a href="/{{blog_id}}/{{comment_id}}/deleteComment" class="btn btn-default">Delete</a>
-  {{/each}}
-  {{else}}
-  <h6>No Comments!</h6>
+  </div>
+{{/each}}
+{{else}}
+<h6 class="noComments">No Comments!</h6>
 {{/if}}
 
 
 <!-- New Comment Form -->
 <form class="newComment" action="/{{blog_id}}" method="post">
-  <input type="text area" name="comment" placeholder="Enter Comment Here">
-  <input type="submit" name="submitComment" value="Submit Comment">
+  <div class="commentForm">
+    <h6>Post a New Comment:</h6>
+    <textarea name="comment" class="commentArea col-lg-8" rows="8">Enter Comment Here</textarea>
+    <input type="submit" class = "submitComment btn btn-default" name="submitComment" value="Submit Comment">
+  </div>
 </form>
