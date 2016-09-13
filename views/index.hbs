@@ -1,11 +1,8 @@
-<h3>Blog Name #1</h3>
-<p>
-  Lorem ipsum dolor sit amet, at ullum deleniti qui, habemus epicuri percipitur mel et. An sed maiorum necessitatibus. Accumsan mnesarchum no cum, ex ipsum accusata eam. Id per causae meliore deseruisse. Diam ancillae nec ad, ius cibo intellegam at, no his salutatus definitiones.
-</p>
-<a href="#" class="read">Read More &gt</a>
-
-<h3>Blog Name #2</h3>
-<p>
-  Lorem ipsum dolor sit amet, at ullum deleniti qui, habemus epicuri percipitur mel et. An sed maiorum necessitatibus. Accumsan mnesarchum no cum, ex ipsum accusata eam. Id per causae meliore deseruisse. Diam ancillae nec ad, ius cibo intellegam at, no his salutatus definitiones.
-</p>
-<a href="#" class="read">Read More &gt</a>
+{{#each blogs}}
+  <h3>{{title}}</h3>
+  <img class="blogImage" src="{{imageURL}}"/>
+  <p>
+    {{snippet}}
+  </p>
+  <a href="/{{blog_id}}" class="read">Read More &gt</a>
+{{/each}}

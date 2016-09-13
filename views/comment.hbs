@@ -1,0 +1,17 @@
+{{#each blogInfo}}
+  <h3>{{blogTitle}}</h3>
+  <p>
+    {{blogContent}}
+  </p>
+{{/each}}
+
+<!-- Comments Section -->
+
+<h5>Edit Comment</h5>
+{{#each commentById}}
+  <form class="submitCommentEdit" action="/{{blog_id}}/{{comment_id}}/editComment" method="post">
+    <input type="text area" name="commentEdit" value="{{comment_content}}">
+    <input type="submit" name="submitCommentEdit" value="Edit Comment">
+  </form>
+  <a href="/{{blog_id}}" class="btn btn-default">Cancel</a>
+{{/each}}

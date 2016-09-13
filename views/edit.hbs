@@ -1,0 +1,9 @@
+{{#each blogInfo}}
+  <form class="post" action="/{{id}}/editPost" method="post">
+    <input class="textInput" type="text" name="title" value="{{title}}">
+    <input class="textInput" type="text" name="content" value="{{blogContent}}">
+    <input class="textInput" type="text" name="image" value="{{imageURL}}">
+    <input type="submit" name="BlogEdit" value="Submit Changes">
+    <a href="/{{id}}" class="btn btn-default">Cancel</a>
+  </form>
+{{/each}}
