@@ -94,6 +94,7 @@ a {
   font-size: 3vmin;
   line-height: 1.5;
   text-align: justify;
+  white-space: pre-line;
 }
 
 /*Blog.hbs*/
@@ -137,6 +138,7 @@ a {
 
 .commentContent{
   font-size: 2.5vmin;
+  white-space: pre-line;
 }
 
 .commentArea{
