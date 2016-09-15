@@ -154,12 +154,8 @@ router.get('/:blogid/deletePost', function(req,res,next){
   var url = '/' + req.params.blogid;
   query.findUserInformation(req.user.username)
   .then(function(userInfo){
-    console.log('userInfo',userInfo);
     query.getBlogByID(req.params.blogid)
     .then(function(blogInfo){
-      console.log('userInfo.id',userInfo.id);
-      console.log('blogInfo',blogInfo);
-      console.log('blogInfo[0]',blogInfo);
       if(userInfo.id !== blogInfo[0].user_id){
         res.render('error', {message: "This is not your blog post. You do not have access to edit.", link: url});
         return;

@@ -54,7 +54,7 @@ function getBlogs(){
 }
 
 function getBlogByID(id){
-  return knex('blog').select('id','title','content AS blogContent', 'user_id','imageURL').where('id',id);
+  return knex('blog').select('id','title','content AS blogContent', 'user_id','imageURL','user_fullName').where('id',id);
 }
 
 function getBlogAndCommentsByBlogID(id){

@@ -15,7 +15,7 @@
   <form class="newComment" action="/{{blog_id}}/{{comment_id}}/editComment" method="post">
     <div class="commentForm">
       <h6>Edit Comment:</h6>
-      <textarea name="commentEdit" class="commentArea" rows="8" cols="40">{{comment_content}}</textarea>
+      <textarea name="commentEdit" class="commentArea col-lg-12" rows="8">{{comment_content}}</textarea>
       <span>
         <input type="submit" class="submitComment btn btn-default" name="submitCommentEdit" value="Edit Comment">
         <a href="/{{blog_id}}" class="cancel btn btn-default">Cancel</a>

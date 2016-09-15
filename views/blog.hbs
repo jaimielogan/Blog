@@ -1,6 +1,7 @@
 <div class="blogs">
   {{#each blogInfo}}
     <h3 class="blogTitle">{{title}}</h3>
+    <h6 class="author">Written By: {{user_fullName}}</h6>
     <img class="blogImage" src="{{imageURL}}"/>
     <p class="content">
       {{blogContent}}
@@ -13,12 +14,12 @@
 </div>
 
 <!-- Comments Section -->
-<h5 class="commentHeader col-lg-10">Comments</h5>
+<h5 class="commentHeader col-lg-12">Comments</h5>
 {{#if comments}}
 {{#each comments}}
-  <div class="comments col-lg-6">
+  <div class="comments col-lg-12">
     <h6 class="commentUser">{{comment_user}}</h6>
-    <p>
+    <p class="commentContent">
       {{comment_content}}
     </p>
     <a href="/{{blog_id}}/{{comment_id}}/editComment" class="btn btn-default">Edit</a>
@@ -26,7 +27,7 @@
   </div>
 {{/each}}
 {{else}}
-<h6 class="noComments">No Comments!</h6>
+<h6 class="noComments col-lg-12">No Comments!</h6>
 {{/if}}
 
 
@@ -34,7 +35,7 @@
 <form class="newComment" action="/{{blog_id}}" method="post">
   <div class="commentForm">
     <h6>Post a New Comment:</h6>
-    <textarea name="comment" class="commentArea col-lg-8" rows="8">Enter Comment Here</textarea>
+    <textarea name="comment" class="commentArea col-lg-12" rows="8">Enter Comment Here</textarea>
     <input type="submit" class = "submitComment btn btn-default" name="submitComment" value="Submit Comment">
   </div>
 </form>
