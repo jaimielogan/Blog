@@ -5,6 +5,11 @@ body {
   flex-direction: column;
 }
 
+.col-lg-12 {
+  border: 1px solid lightgrey;
+  padding: 5px;
+}
+
 /*Layout*/
 .title,
 .register,
@@ -84,14 +89,15 @@ a {
   margin-bottom: 20px;
 }
 
-.border{
-  padding:0 45% 5px 45%;
+.blogBorder{
+  border: none;
   border-bottom: 1px solid lightgrey;
+  text-align: center;
 }
 
 .content{
   width: 60%;
-  font-size: 3vmin;
+  font-size: 3.5vmin;
   line-height: 1.5;
   text-align: justify;
   white-space: pre-line;
@@ -100,10 +106,6 @@ a {
 /*Blog.hbs*/
 /*edit.hbs*/
 /*comment.hbs*/
-.col-lg-12 {
-  border: 1px solid lightgrey;
-  padding: 5px;
-}
 
 .commentHeader{
   border: none;

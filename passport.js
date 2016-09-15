@@ -9,7 +9,7 @@ passport.use(new Local(function(username, password, done){
   .then(function(verified){
     if(!verified){
       //Throw Error Page
-      done(new Error('incorrect username/password'));
+      done(new Error('Incorrect username and/or password'));
       return;
       // Do not show error and just redirect to main page
       // done(null,false);
