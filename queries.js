@@ -66,7 +66,7 @@ function getBlogByTitle(title){
 }
 
 function getComments(blog_id){
-  return knex('comment').select('comment.id AS comment_id','comment.blog_id','user.fullName AS comment_user','comment.content as comment_content').innerJoin('user','comment.user_id','user.id').where('comment.blog_id',blog_id).orderBy('comment.id','desc');
+  return knex('comment').select('comment.id AS comment_id','comment.blog_id','user.fullName AS comment_user','comment.content as comment_content','user.id AS user_id').innerJoin('user','comment.user_id','user.id').where('comment.blog_id',blog_id).orderBy('comment.id','desc');
 }
 
 function getCommentsByID(comment_id){

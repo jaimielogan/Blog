@@ -85,6 +85,7 @@ router.get('/:blogid', function(req,res,next){
     res.redirect('/login');
     return;
   }
+  var authorized = false;
   query.getBlogByID(req.params.blogid)
   .then(function(blogInfo){
     query.getComments(req.params.blogid)
@@ -102,10 +103,6 @@ router.post('/:blogid', function(req,res,next){
     return;
   }
   var url = '/' + req.params.blogid;
-  if(!req.isAuthenticated()){
-    res.redirect('/login');
-    return;
-  }
   query.findUserInformation(req.user.username)
   .then(function(userInfo){
     query.createComment(userInfo.id,req.params.blogid,req.body.comment,userInfo.fullName)
