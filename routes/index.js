@@ -52,6 +52,19 @@ router.get('/logout', function(req,res){
   res.redirect('/login');
 });
 
+//---------------//
+// Chat //
+router.get('/chat', function(req,res){
+  if(!req.isAuthenticated()){
+    res.redirect('/login');
+    return;
+  }
+  query.findUserInformation(req.user.username)
+  .then(function(userInfo){
+    res.render('chat', {user_fullName: userInfo.fullName});
+  });
+});
+
 // Post Article //
 //--------------//
 // Render Post Article Page//
